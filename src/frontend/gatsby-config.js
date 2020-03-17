@@ -58,5 +58,14 @@ module.exports = {
         icon: `src/images/logo.svg`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        appendScript: require.resolve(`${__dirname}/src/sw-cached.js`),
+        workboxConfig: {
+          importWorkboxFrom: `cdn`,
+        },
+      },
+    },
   ],
 };
