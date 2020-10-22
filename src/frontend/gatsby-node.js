@@ -90,6 +90,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
 
   const pageTemplate = require.resolve(`./src/templates/template.js`);
+  const docsTemplate = require.resolve(`./src/templates/docsTemplate.js`);
 
   const result = await graphql(`
     {
@@ -112,12 +113,22 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   }
 
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    createPage({
-      path: node.frontmatter.slug,
-      component: pageTemplate,
-      context: {
-        slug: node.frontmatter.slug,
-      }, // additional data can be passed via context
-    });
+    if (node.frontmatter.postType === 'about') {
+      createPage({
+        path: node.frontmatter.slug,
+        component: pageTemplate,
+        context: {
+          slug: node.frontmatter.slug,
+        }, // additional data can be passed via context
+      });
+    } else {
+      createPage({
+        path: node.frontmatter.slug,
+        component: docsTemplate,
+        context: {
+          slug: node.frontmatter.slug,
+        }, // additional data can be passed via context
+      });
+    }
   });
 };

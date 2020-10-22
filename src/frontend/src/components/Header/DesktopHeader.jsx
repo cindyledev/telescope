@@ -62,6 +62,11 @@ export default function DesktopHeader() {
               About
             </Link>
           </Button>
+          <Button color="inherit" size="medium" className={classes.button}>
+            <Link to="/docs" className={classes.links}>
+              Docs
+            </Link>
+          </Button>
           <Login />
         </Toolbar>
       </AppBar>
