@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "telescope",
+      "image": "cindyledev/telescope",
+      "hostname": "telescope",
+      "essential": true,
+      "memory": 256
+    }
+  ]
+}
