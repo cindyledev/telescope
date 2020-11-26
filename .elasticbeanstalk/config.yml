@@ -1,0 +1,10 @@
+branch-defaults:
+  deployment:
+    environment: null
+global:
+  application_name: Telescope-Gatsby
+  branch: deployment
+  default_ec2_keyname: null
+  default_platform: Node.js
+  default_region: us-east-2
+  sc: git
