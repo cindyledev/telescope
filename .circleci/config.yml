@@ -16,3 +16,38 @@ jobs:
       - run:
           name: Execute tests
           command: npm run test-ci
+  deploy:
+    working_directory: ~/telescope
+    docker:
+      - image: circleci:python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Install AWS CLI
+          command: sudo pip install awsebcli
+      - run:
+          name: Create AWS credential
+          command: |
+            mkdir ~/.aws
+            touch ~/.aws/config
+            chmod ~/.aws/config
+            echo "[profile prod]" > ~/.aws/config
+            echo "aws_access_key_id=$AWS_ACCESS_KEY_ID" >> ~/.aws/config
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/config
+      - run:
+          name: Deploy to EB if branch is deployment
+          command: |
+            eb use Telescope-Gatsby-env
+            eb deploy
+
+workflows:
+  build_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - deployment
